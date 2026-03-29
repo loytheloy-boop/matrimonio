@@ -3,27 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <title>Area Riservata</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <script defer src="script.js"></script>
 </head>
 <body>
 
 <div class="hero">
-    <img src="img/sposi.jpg" class="foto-sposi">
+    <img src="img/sposi.jpg" class="foto-sposi" alt="Foto degli sposi">
     <h1>Matrimonio di Alessandro e Deborah</h1>
 
     <h3 id="hero-data"></h3>
-    <h4 id="hero-ricevimento" style="margin-top:5px; font-weight:400;"></h4>
+    <h4 id="hero-ricevimento" class="hero-sub"></h4>
 </div>
 
-<h2 style="margin-top:20px;">Area Riservata</h2>
+<h2 class="titolo-sezione">Area Riservata</h2>
 
-<div id="login">
+<div id="login" class="login-box">
     <input type="password" id="pwd" placeholder="Password">
     <button onclick="login()">Accedi</button>
 </div>
 
 <div id="admin-area" style="display:none;">
+
     <div id="controls">
         <input type="text" id="search" placeholder="Cerca invitato..." onkeyup="filtra()">
         <button onclick="filtro('tutti')">Tutti</button>
@@ -31,7 +33,9 @@
         <button onclick="filtro('attesa')">In attesa</button>
     </div>
 
-    <table id="tabella"></table>
+    <div class="table-wrapper">
+        <table id="tabella"></table>
+    </div>
 </div>
 
 </body>
