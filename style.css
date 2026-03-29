@@ -11,6 +11,10 @@
 }
 
 /* BASE */
+* {
+    box-sizing: border-box;
+}
+
 body {
     font-family: 'Playfair Display', serif;
     background: var(--bianco);
@@ -22,85 +26,120 @@ body {
 
 /* HERO */
 .hero {
-    padding: 40px 20px;
+    padding: 30px 16px;
     background: var(--bianco);
     border-bottom: 3px solid var(--blu);
 }
 
 .hero h1 {
     font-family: 'Great Vibes', cursive;
-    font-size: 60px;
+    font-size: 42px;
     margin: 10px 0;
     color: var(--blu);
 }
 
-.hero h3, .hero h4 {
-    font-size: 20px;
-    margin-top: 5px;
+.hero h3,
+.hero h4 {
+    font-size: 16px;
+    margin-top: 4px;
     color: var(--testo);
 }
 
+.hero-sub {
+    margin-top: 5px;
+    font-weight: 400;
+}
+
+/* FOTO SPOSI */
 .foto-sposi {
-    width: 220px;
-    height: 220px;
+    width: 180px;
+    height: 180px;
     object-fit: cover;
     border-radius: 50%;
     border: 4px solid var(--blu);
     box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    margin-bottom: 20px;
+    margin-bottom: 16px;
+}
+
+/* CONTENUTO GENERICO */
+.contenuto-pagina {
+    padding: 20px 16px 40px;
+}
+
+/* TITOLI SEZIONE */
+.titolo-sezione {
+    margin-top: 20px;
+    font-size: 22px;
 }
 
 /* BOTTONI */
 button {
-    padding: 14px 26px;
+    padding: 12px 22px;
     background: var(--blu);
     color: white;
     border: none;
     border-radius: 30px;
     cursor: pointer;
-    font-size: 18px;
-    transition: 0.3s;
+    font-size: 16px;
+    transition: 0.2s;
 }
 
 button:hover {
     background: var(--blu-scuro);
-    transform: scale(1.05);
+    transform: scale(1.03);
 }
 
 /* LOGIN */
+.login-box {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+}
+
 #login input {
     padding: 10px;
     border: 1px solid var(--blu);
     border-radius: 6px;
     font-size: 16px;
+    width: 220px;
 }
 
 /* AREA ADMIN */
 #admin-area {
-    margin-top: 30px;
+    margin-top: 20px;
+    padding: 0 10px 40px;
 }
 
 /* FILTRI E RICERCA */
 #controls {
-    margin: 20px auto;
+    margin: 10px auto 20px;
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
-    gap: 15px;
+    gap: 8px;
 }
 
 #search {
     padding: 10px;
     border: 1px solid var(--blu);
     border-radius: 6px;
-    width: 200px;
+    width: 220px;
 }
 
 /* TABELLA */
+.table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
 table {
-    margin: 40px auto;
+    margin: 0 auto;
     border-collapse: separate;
     border-spacing: 0;
-    width: 90%;
+    width: 100%;
+    min-width: 600px;
     background: white;
     border-radius: 12px;
     overflow: hidden;
@@ -110,15 +149,15 @@ table {
 th {
     background: var(--blu);
     color: white;
-    padding: 14px;
-    font-size: 18px;
-    letter-spacing: 0.5px;
+    padding: 12px;
+    font-size: 16px;
+    letter-spacing: 0.3px;
     cursor: pointer;
 }
 
 td {
-    padding: 14px;
-    font-size: 16px;
+    padding: 10px;
+    font-size: 14px;
     border-bottom: 1px solid #eee;
 }
 
@@ -132,10 +171,11 @@ tr:hover {
 
 /* BADGE */
 .badge {
-    padding: 6px 12px;
+    padding: 6px 10px;
     border-radius: 20px;
     color: white;
-    font-size: 14px;
+    font-size: 13px;
+    display: inline-block;
 }
 
 .badge.verde {
@@ -144,4 +184,59 @@ tr:hover {
 
 .badge.rosso {
     background: #d9534f;
+}
+
+/* Bottoni nella tabella */
+table button {
+    padding: 6px 10px;
+    font-size: 13px;
+    border-radius: 20px;
+}
+
+/* PAGINA INVITATO: BOTTONE GRANDE MOBILE */
+#contenuto button {
+    width: 100%;
+    max-width: 260px;
+    margin-top: 16px;
+}
+
+/* RESPONSIVE MOBILE */
+@media (max-width: 768px) {
+    .hero {
+        padding: 24px 12px;
+    }
+
+    .hero h1 {
+        font-size: 34px;
+    }
+
+    .hero h3,
+    .hero h4 {
+        font-size: 14px;
+    }
+
+    .foto-sposi {
+        width: 150px;
+        height: 150px;
+    }
+
+    #controls {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #controls button {
+        width: 100%;
+        max-width: 260px;
+    }
+
+    #search {
+        width: 100%;
+        max-width: 260px;
+    }
+
+    .login-box input {
+        width: 100%;
+        max-width: 260px;
+    }
 }
