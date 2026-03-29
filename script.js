@@ -15,6 +15,7 @@ function login() {
         document.getElementById("login").style.display = "none";
         document.getElementById("admin-area").style.display = "block";
         mostraInvitati();
+        window.scrollTo({ top: document.querySelector("#admin-area").offsetTop, behavior: "smooth" });
     }
 }
 
