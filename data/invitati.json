@@ -1,4 +1,4 @@
 [
-    { "id": 1, "nome": "Maria Teresa, Michiele e Grata", "telefono": "3331234567", "email": "mario@example.com" },
+    { "id": 1, "nome": "Maria Teresa, Michiele e Greta", "telefono": "3331234567", "email": "mario@example.com" },
     { "id": 2, "nome": "Anna Bianchi", "telefono": "3399876543", "email": "anna@example.com" }
 ]
