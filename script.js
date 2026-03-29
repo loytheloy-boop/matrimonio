@@ -1,39 +1,145 @@
+/* ============================================================
+   CONFIGURAZIONE
+   Inserisci qui l'URL del tuo Google Apps Script
+   ============================================================ */
+const API_URL = "https://script.google.com/macros/s/AKfycbxbOePOroxSVH9Ttsz8QZZhf3-VxmA89SKeGFHyJKR5NreKfts53Fvpq8gkUgGsJoYFrg/exec";
+
+/* ============================================================
+   VARIABILI GLOBALI
+   ============================================================ */
 let invitati = [];
 let filtroAttivo = "tutti";
 let ricerca = "";
+let ordineAsc = true;
 
-// Carica dati
+/* ============================================================
+   CARICA LISTA INVITATI (dal file JSON locale)
+   ============================================================ */
 async function caricaDati() {
     const res = await fetch("data/invitati.json");
     invitati = await res.json();
 }
 
-// Login
+/* ============================================================
+   LOGIN AREA RISERVATA
+   ============================================================ */
 function login() {
     const pwd = document.getElementById("pwd").value;
+
     if (pwd === "merate2026") {
         document.getElementById("login").style.display = "none";
         document.getElementById("admin-area").style.display = "block";
+
         mostraInvitati();
-        window.scrollTo({ top: document.querySelector("#admin-area").offsetTop, behavior: "smooth" });
+
+        window.scrollTo({
+            top: document.querySelector("#admin-area").offsetTop,
+            behavior: "smooth"
+        });
     }
 }
 
-// Filtri
+/* ============================================================
+   LETTURA CONFERME DA GOOGLE SHEETS
+   ============================================================ */
+async function caricaConferme() {
+    const res = await fetch(API_URL);
+    return await res.json();
+}
+
+/* ============================================================
+   SALVATAGGIO CONFERMA SU GOOGLE SHEETS
+   ============================================================ */
+async function conferma(id) {
+    const invitato = invitati.find(x => x.id == id);
+
+    const payload = {
+        id: invitato.id,
+        nome: invitato.nome,
+        telefono: invitato.telefono,
+        email: invitato.email,
+        stato: "confermato"
+    };
+
+    await fetch(API_URL, {
+        method: "POST",
+        body: JSON.stringify(payload)
+    });
+
+    document.getElementById("contenuto").innerHTML =
+        "<h2>Grazie di cuore! Ti aspettiamo.</h2>";
+}
+
+/* ============================================================
+   MOSTRA SCHEDA INVITATO (pagina pubblica)
+   ============================================================ */
+function getParametro(nome) {
+    const url = new URL(window.location.href);
+    return url.searchParams.get(nome);
+}
+
+function mostraSchedaInvitato() {
+    const id = getParametro("id");
+    const invitato = invitati.find(x => x.id == id);
+
+    const div = document.getElementById("contenuto");
+
+    if (!invitato) {
+        div.innerHTML = "<h2>Invito non valido</h2>";
+        return;
+    }
+
+    div.innerHTML = `
+        <h2>Ciao ${invitato.nome}!</h2>
+        <p>Siamo felici di invitarti al nostro matrimonio.</p>
+        <button onclick="conferma(${id})">Confermo la mia presenza</button>
+    `;
+}
+
+/* ============================================================
+   FILTRI E RICERCA
+   ============================================================ */
 function filtro(tipo) {
     filtroAttivo = tipo;
     mostraInvitati();
 }
 
-// Ricerca
 function filtra() {
     ricerca = document.getElementById("search").value.toLowerCase();
     mostraInvitati();
 }
 
-// Mostra tabella
-function mostraInvitati() {
+/* ============================================================
+   ORDINAMENTO ALFABETICO
+   ============================================================ */
+function ordina() {
+    invitati.sort((a, b) =>
+        ordineAsc
+            ? a.nome.localeCompare(b.nome)
+            : b.nome.localeCompare(a.nome)
+    );
+    ordineAsc = !ordineAsc;
+    mostraInvitati();
+}
+
+/* ============================================================
+   GENERA LINK PERSONALIZZATO
+   ============================================================ */
+function generaLink(id) {
+    const base = window.location.origin + window.location.pathname.replace("admin.html", "");
+    const link = `${base}?id=${id}`;
+    navigator.clipboard.writeText(link);
+    alert("Link copiato:\n" + link);
+}
+
+/* ============================================================
+   MOSTRA TABELLA INVITATI (area admin)
+   ============================================================ */
+async function mostraInvitati() {
     const tab = document.getElementById("tabella");
+
+    // Carica conferme reali da Google Sheets
+    const conferme = await caricaConferme();
 
     tab.innerHTML = `
         <tr>
@@ -47,7 +153,7 @@ function mostraInvitati() {
 
     invitati
         .filter(inv => {
-            const stato = localStorage.getItem("invito_" + inv.id) || "in attesa";
+            const stato = conferme.find(c => c.id == inv.id)?.stato || "in attesa";
 
             if (filtroAttivo === "confermato" && stato !== "confermato") return false;
             if (filtroAttivo === "attesa" && stato !== "in attesa") return false;
@@ -55,7 +161,7 @@ function mostraInvitati() {
             return inv.nome.toLowerCase().includes(ricerca);
         })
         .forEach(inv => {
-            const stato = localStorage.getItem("invito_" + inv.id) || "in attesa";
+            const stato = conferme.find(c => c.id == inv.id)?.stato || "in attesa";
 
             const badge = stato === "confermato"
                 ? `<span class="badge verde">✔ Confermato</span>`
@@ -73,78 +179,9 @@ function mostraInvitati() {
         });
 }
 
-// Ordinamento alfabetico
-let ordineAsc = true;
-function ordina() {
-    invitati.sort((a, b) =>
-        ordineAsc
-            ? a.nome.localeCompare(b.nome)
-            : b.nome.localeCompare(a.nome)
-    );
-    ordineAsc = !ordineAsc;
-    mostraInvitati();
-}
-
-// Genera link
-function generaLink(id) {
-    const base = window.location.origin + window.location.pathname.replace("admin.html", "");
-    const link = `${base}?id=${id}`;
-    navigator.clipboard.writeText(link);
-    alert("Link copiato:\n" + link);
-}
-
-// Pagina invitato
-function getParametro(nome) {
-    const url = new URL(window.location.href);
-    return url.searchParams.get(nome);
-}
-
-function mostraSchedaInvitato() {
-    const id = getParametro("id");
-    const invitato = invitati.find(x => x.id == id);
-
-    const div = document.getElementById("contenuto");
-
-    if (!invitato) {
-        div.innerHTML = "<h2>Invito non valido</h2>";
-        return;
-    }
-
-    const stato = localStorage.getItem("invito_" + id);
-
-    if (stato === "confermato") {
-        div.innerHTML = `<h2>Ciao ${invitato.nome}!</h2><p>Hai già confermato.</p>`;
-        return;
-    }
-
-    div.innerHTML = `
-        <h2>Ciao ${invitato.nome}!</h2>
-        <p>Siamo felici di invitarti al nostro matrimonio.</p>
-        <button onclick="conferma(${id})">Confermo la mia presenza</button>
-    `;
-}
-
-async function conferma(id) {
-    const invitato = invitati.find(x => x.id == id);
-
-    const payload = {
-        id: invitato.id,
-        nome: invitato.nome,
-        telefono: invitato.telefono,
-        email: invitato.email,
-        stato: "confermato"
-    };
-
-    await fetch("https://script.google.com/macros/s/AKfycbxbOePOroxSVH9Ttsz8QZZhf3-VxmA89SKeGFHyJKR5NreKfts53Fvpq8gkUgGsJoYFrg/exec", {
-        method: "POST",
-        body: JSON.stringify(payload)
-    });
-
-    document.getElementById("contenuto").innerHTML =
-        "<h2>Grazie di cuore! Ti aspettiamo.</h2>";
-}
-
-// Avvio
+/* ============================================================
+   AVVIO
+   ============================================================ */
 window.onload = async () => {
     await caricaDati();
 
