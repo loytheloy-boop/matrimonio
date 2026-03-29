@@ -13,19 +13,22 @@ let ordineAsc = true;
    CARICA CONFIGURAZIONE (data, ora, luoghi)
    ============================================================ */
 async function caricaConfig() {
-    const res = await fetch("config.json");
-    CONFIG = await res.json();
+    try {
+        const res = await fetch("config.json");
+        CONFIG = await res.json();
 
-    // Aggiorna la hero se presente
-    const heroData = document.getElementById("hero-data");
-    const heroRicevimento = document.getElementById("hero-ricevimento");
+        const heroData = document.getElementById("hero-data");
+        const heroRicevimento = document.getElementById("hero-ricevimento");
 
-    if (heroData) {
-        heroData.textContent = `${CONFIG.data} – ore ${CONFIG.ora} – ${CONFIG.cerimonia_luogo}`;
-    }
+        if (heroData) {
+            heroData.textContent = `${CONFIG.data} – ore ${CONFIG.ora} – ${CONFIG.cerimonia_luogo}`;
+        }
 
-    if (heroRicevimento) {
-        heroRicevimento.textContent = `A seguire ricevimento presso ${CONFIG.ricevimento_luogo}`;
+        if (heroRicevimento) {
+            heroRicevimento.textContent = `A seguire ricevimento presso ${CONFIG.ricevimento_luogo}`;
+        }
+    } catch (e) {
+        console.error("Errore nel caricamento di config.json", e);
     }
 }
 
@@ -49,10 +52,15 @@ function login() {
 
         mostraInvitati();
 
-        window.scrollTo({
-            top: document.querySelector("#admin-area").offsetTop,
-            behavior: "smooth"
-        });
+        const adminArea = document.querySelector("#admin-area");
+        if (adminArea) {
+            window.scrollTo({
+                top: adminArea.offsetTop,
+                behavior: "smooth"
+            });
+        }
+    } else {
+        alert("Password errata");
     }
 }
 
@@ -66,6 +74,12 @@ async function caricaConferme() {
 
 async function conferma(id) {
     const invitato = invitati.find(x => x.id == id);
+
+    if (!invitato) {
+        document.getElementById("contenuto").innerHTML =
+            "<h2>Invito non valido</h2>";
+        return;
+    }
 
     const payload = {
         id: invitato.id,
@@ -151,6 +165,8 @@ function generaLink(id) {
    ============================================================ */
 async function mostraInvitati() {
     const tab = document.getElementById("tabella");
+    if (!tab) return;
+
     const conferme = await caricaConferme();
 
     tab.innerHTML = `
