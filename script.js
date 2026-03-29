@@ -1,15 +1,18 @@
 let invitati = [];
 
+// Carica il file JSON con la lista degli invitati
 async function caricaDati() {
     const res = await fetch("data/invitati.json");
     invitati = await res.json();
 }
 
+// Legge un parametro dalla URL (es: ?id=1)
 function getParametro(nome) {
     const url = new URL(window.location.href);
     return url.searchParams.get(nome);
 }
 
+// Mostra la scheda dell'invitato
 function mostraSchedaInvitato() {
     const id = getParametro("id");
     const invitato = invitati.find(x => x.id == id);
@@ -24,8 +27,10 @@ function mostraSchedaInvitato() {
     const stato = localStorage.getItem("invito_" + id);
 
     if (stato === "confermato") {
-        div.innerHTML = `<h2>Ciao ${invitato.nome}!</h2>
-                         <p>Hai già confermato la tua presenza.</p>`;
+        div.innerHTML = `
+            <h2>Ciao ${invitato.nome}!</h2>
+            <p>Hai già confermato la tua presenza.</p>
+        `;
         return;
     }
 
@@ -36,12 +41,14 @@ function mostraSchedaInvitato() {
     `;
 }
 
+// Salva la conferma dell'invitato
 function conferma(id) {
     localStorage.setItem("invito_" + id, "confermato");
     document.getElementById("contenuto").innerHTML =
         "<h2>Grazie di cuore! Ti aspettiamo.</h2>";
 }
 
+// Login area riservata
 function login() {
     const pwd = document.getElementById("pwd").value;
     if (pwd === "merate2026") {
@@ -50,6 +57,7 @@ function login() {
     }
 }
 
+// Mostra la lista degli invitati nell'area admin
 function mostraInvitati() {
     const tab = document.getElementById("tabella");
     tab.innerHTML = `
@@ -69,10 +77,18 @@ function mostraInvitati() {
     });
 }
 
+// BLOCCO FINALE CORRETTO PER GITHUB PAGES
 window.onload = async () => {
     await caricaDati();
-    if (window.location.pathname.includes("index.html") || window.location.pathname === "/") {
+
+    const path = window.location.pathname;
+
+    // Funziona sia in locale che su GitHub Pages
+    if (
+        path.endsWith("/") ||
+        path.endsWith("/index.html") ||
+        path.includes("matrimonio")
+    ) {
         mostraSchedaInvitato();
     }
 };
-
