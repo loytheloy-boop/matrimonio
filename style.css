@@ -1,1 +1,42 @@
+body {
+    font-family: 'Georgia', serif;
+    background: #faf7f2;
+    text-align: center;
+    color: #444;
+}
+
+.hero {
+    padding: 20px;
+}
+
+.foto-sposi {
+    width: 200px;
+    border-radius: 100%;
+    margin-bottom: 20px;
+}
+
+button {
+    padding: 12px 20px;
+    background: #c49b66;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+button:hover {
+    background: #a57f4f;
+}
+
+table {
+    margin: 20px auto;
+    border-collapse: collapse;
+    width: 80%;
+}
+
+td, th {
+    border: 1px solid #ccc;
+    padding: 10px;
+}
 
