@@ -14,8 +14,7 @@ let ordineAsc = true;
    ============================================================ */
 async function caricaConfig() {
     try {
-        const res = await fetch("data/invitati.json?nocache=" + Date.now());
-
+        const res = await fetch("config.json?nocache=" + Date.now());
         CONFIG = await res.json();
 
         const heroData = document.getElementById("hero-data");
@@ -34,10 +33,10 @@ async function caricaConfig() {
 }
 
 /* ============================================================
-   CARICA LISTA INVITATI
+   CARICA LISTA INVITATI (con anti-cache)
    ============================================================ */
 async function caricaDati() {
-    const res = await fetch("data/invitati.json");
+    const res = await fetch("data/invitati.json?nocache=" + Date.now());
     invitati = await res.json();
 }
 
