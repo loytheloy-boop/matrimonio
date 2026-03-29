@@ -61,7 +61,13 @@ function login() {
 function mostraInvitati() {
     const tab = document.getElementById("tabella");
     tab.innerHTML = `
-        <tr><th>Nome</th><th>Telefono</th><th>Email</th><th>Stato</th></tr>
+        <tr>
+            <th>Nome</th>
+            <th>Telefono</th>
+            <th>Email</th>
+            <th>Stato</th>
+            <th>Link</th>
+        </tr>
     `;
 
     invitati.forEach(inv => {
@@ -72,9 +78,23 @@ function mostraInvitati() {
                 <td>${inv.telefono}</td>
                 <td>${inv.email}</td>
                 <td>${stato}</td>
+                <td><button onclick="generaLink(${inv.id})">Genera link</button></td>
             </tr>
         `;
     });
+}
+
+// Genera il link personalizzato per un invitato
+function generaLink(id) {
+    const base = window.location.origin + window.location.pathname.replace("admin.html", "");
+    const link = `${base}?id=${id}`;
+    copia(link);
+    alert("Link copiato negli appunti:\n" + link);
+}
+
+// Copia un testo negli appunti
+function copia(testo) {
+    navigator.clipboard.writeText(testo);
 }
 
 // BLOCCO FINALE CORRETTO PER GITHUB PAGES
@@ -89,6 +109,9 @@ window.onload = async () => {
         path.endsWith("/index.html") ||
         path.includes("matrimonio")
     ) {
-        mostraSchedaInvitato();
+        if (document.getElementById("contenuto")) {
+            mostraSchedaInvitato();
+        }
     }
 };
+
