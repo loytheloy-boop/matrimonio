@@ -3,17 +3,34 @@
    Inserisci qui l'URL del tuo Google Apps Script
    ============================================================ */
 const API_URL = "https://script.google.com/macros/s/AKfycbxbOePOroxSVH9Ttsz8QZZhf3-VxmA89SKeGFHyJKR5NreKfts53Fvpq8gkUgGsJoYFrg/exec";
-
-/* ============================================================
-   VARIABILI GLOBALI
-   ============================================================ */
+let CONFIG = {};
 let invitati = [];
 let filtroAttivo = "tutti";
 let ricerca = "";
 let ordineAsc = true;
 
 /* ============================================================
-   CARICA LISTA INVITATI (dal file JSON locale)
+   CARICA CONFIGURAZIONE (data, ora, luoghi)
+   ============================================================ */
+async function caricaConfig() {
+    const res = await fetch("config.json");
+    CONFIG = await res.json();
+
+    // Aggiorna la hero se presente
+    const heroData = document.getElementById("hero-data");
+    const heroRicevimento = document.getElementById("hero-ricevimento");
+
+    if (heroData) {
+        heroData.textContent = `${CONFIG.data} – ore ${CONFIG.ora} – ${CONFIG.cerimonia_luogo}`;
+    }
+
+    if (heroRicevimento) {
+        heroRicevimento.textContent = `A seguire ricevimento presso ${CONFIG.ricevimento_luogo}`;
+    }
+}
+
+/* ============================================================
+   CARICA LISTA INVITATI
    ============================================================ */
 async function caricaDati() {
     const res = await fetch("data/invitati.json");
@@ -21,7 +38,7 @@ async function caricaDati() {
 }
 
 /* ============================================================
-   LOGIN AREA RISERVATA
+   LOGIN
    ============================================================ */
 function login() {
     const pwd = document.getElementById("pwd").value;
@@ -40,16 +57,13 @@ function login() {
 }
 
 /* ============================================================
-   LETTURA CONFERME DA GOOGLE SHEETS
+   GOOGLE SHEETS: LETTURA E SCRITTURA
    ============================================================ */
 async function caricaConferme() {
     const res = await fetch(API_URL);
     return await res.json();
 }
 
-/* ============================================================
-   SALVATAGGIO CONFERMA SU GOOGLE SHEETS
-   ============================================================ */
 async function conferma(id) {
     const invitato = invitati.find(x => x.id == id);
 
@@ -71,7 +85,7 @@ async function conferma(id) {
 }
 
 /* ============================================================
-   MOSTRA SCHEDA INVITATO (pagina pubblica)
+   PAGINA INVITATO
    ============================================================ */
 function getParametro(nome) {
     const url = new URL(window.location.href);
@@ -110,7 +124,7 @@ function filtra() {
 }
 
 /* ============================================================
-   ORDINAMENTO ALFABETICO
+   ORDINAMENTO
    ============================================================ */
 function ordina() {
     invitati.sort((a, b) =>
@@ -123,7 +137,7 @@ function ordina() {
 }
 
 /* ============================================================
-   GENERA LINK PERSONALIZZATO
+   GENERA LINK
    ============================================================ */
 function generaLink(id) {
     const base = window.location.origin + window.location.pathname.replace("admin.html", "");
@@ -133,12 +147,10 @@ function generaLink(id) {
 }
 
 /* ============================================================
-   MOSTRA TABELLA INVITATI (area admin)
+   MOSTRA TABELLA ADMIN
    ============================================================ */
 async function mostraInvitati() {
     const tab = document.getElementById("tabella");
-
-    // Carica conferme reali da Google Sheets
     const conferme = await caricaConferme();
 
     tab.innerHTML = `
@@ -183,6 +195,7 @@ async function mostraInvitati() {
    AVVIO
    ============================================================ */
 window.onload = async () => {
+    await caricaConfig();
     await caricaDati();
 
     if (document.getElementById("contenuto")) {
