@@ -124,8 +124,22 @@ function mostraSchedaInvitato() {
     `;
 }
 
-function conferma(id) {
-    localStorage.setItem("invito_" + id, "confermato");
+async function conferma(id) {
+    const invitato = invitati.find(x => x.id == id);
+
+    const payload = {
+        id: invitato.id,
+        nome: invitato.nome,
+        telefono: invitato.telefono,
+        email: invitato.email,
+        stato: "confermato"
+    };
+
+    await fetch("https://script.google.com/macros/s/AKfycbxbOePOroxSVH9Ttsz8QZZhf3-VxmA89SKeGFHyJKR5NreKfts53Fvpq8gkUgGsJoYFrg/exec", {
+        method: "POST",
+        body: JSON.stringify(payload)
+    });
+
     document.getElementById("contenuto").innerHTML =
         "<h2>Grazie di cuore! Ti aspettiamo.</h2>";
 }
