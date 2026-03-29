@@ -16,11 +16,15 @@
 </div>
 
 <div id="admin-area" style="display:none;">
-    <button onclick="mostraInvitati()">Mostra lista invitati</button>
 
-    <table id="tabella">
-        <!-- riempita da script.js -->
-    </table>
+    <div id="controls">
+        <input type="text" id="search" placeholder="Cerca invitato..." onkeyup="filtra()">
+        <button onclick="filtro('tutti')">Tutti</button>
+        <button onclick="filtro('confermato')">Confermati</button>
+        <button onclick="filtro('attesa')">In attesa</button>
+    </div>
+
+    <table id="tabella"></table>
 </div>
 
 </body>
