@@ -14,7 +14,8 @@ let ordineAsc = true;
    ============================================================ */
 async function caricaConfig() {
     try {
-        const res = await fetch("config.json");
+        const res = await fetch("data/invitati.json?nocache=" + Date.now());
+
         CONFIG = await res.json();
 
         const heroData = document.getElementById("hero-data");
