@@ -3,6 +3,10 @@
    Inserisci qui l'URL del tuo Google Apps Script
    ============================================================ */
 const API_URL = "https://script.google.com/macros/s/AKfycbxbOePOroxSVH9Ttsz8QZZhf3-VxmA89SKeGFHyJKR5NreKfts53Fvpq8gkUgGsJoYFrg/exec";
+/* ============================================================
+   CONFIGURAZIONE
+   ============================================================ */
+const API_URL = "URL_DEL_TUO_SCRIPT"; // <-- incolla qui l’URL Apps Script
 let CONFIG = {};
 let invitati = [];
 let filtroAttivo = "tutti";
