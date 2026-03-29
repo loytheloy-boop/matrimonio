@@ -2,22 +2,31 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <title>Matrimonio di Alessandro e Deborah</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matrimonio di Alessandro e Deborah</title>
     <link rel="stylesheet" href="style.css">
-    <script defer src="script.js"></script>
 </head>
+
 <body>
 
-<div class="hero">
-    <img src="img/sposi.jpg" class="foto-sposi" alt="Foto degli sposi">
-    <h1>Matrimonio di Alessandro e Deborah</h1>
+    <!-- HERO -->
+    <div class="hero">
+        <img src="img/sposi.jpg" alt="Alessandro e Deborah">
+        <h1>Matrimonio di Alessandro e Deborah</h1>
+        <p id="hero-data">Caricamento...</p>
+        <p id="hero-ricevimento"></p>
+    </div>
 
-    <h3 id="hero-data"></h3>
-    <h4 id="hero-ricevimento" class="hero-sub"></h4>
-</div>
+    <!-- BOTTONE AREA RISERVATA -->
+    <div class="contenuto-pagina">
+        <a href="admin.html">
+            <button class="btn-admin">Accedi all’area riservata</button>
+        </a>
+    </div>
 
-<div id="contenuto" class="contenuto-pagina"></div>
+    <!-- CONTENUTO PAGINA INVITATO -->
+    <div id="contenuto" class="contenuto-pagina"></div>
 
+    <script src="script.js"></script>
 </body>
 </html>
