@@ -120,6 +120,12 @@ function mostraSchedaInvitato() {
     div.innerHTML = `
         <h2>Ciao ${invitato.nome}!</h2>
         <p>Siamo felici di invitarti al nostro matrimonio.</p>
+        <p>Abbiamo già tutto… tranne forse il viaggio di nozze!.</p>
+        <p>Se volete darci una mano a partire,</p>
+        <p>ecco il nostro salvadanaio digitale:</p>
+        <p>Alessandro Albertini Deborah Pennetta</p>
+        <p>IBAN IT69A0569651530000006781X42</p>
+        <p>Causale: Matrimonio Alessandro e Deborah</p>
         <button onclick="conferma(${id})">Confermo la mia presenza</button>
     `;
 }
