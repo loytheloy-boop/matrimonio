@@ -72,7 +72,7 @@ async function caricaConferme() {
     return await res.json();
 }
 
-async function conferma(id) {
+async function conferma(id, risposta) {
     const invitato = invitati.find(x => x.id == id);
 
     if (!invitato) {
@@ -86,7 +86,7 @@ async function conferma(id) {
         nome: invitato.nome,
         telefono: invitato.telefono,
         email: invitato.email,
-        stato: "confermato"
+        stato: risposta === "si" ? "confermato" : "non confermato"
     };
 
     await fetch(API_URL, {
@@ -95,9 +95,11 @@ async function conferma(id) {
     });
 
     document.getElementById("contenuto").innerHTML =
-        "<h2>Grazie di cuore! Ti aspettiamo.</h2>";
+        risposta === "si"
+            ? "<h2>Grazie di cuore! Ti aspettiamo.</h2>"
+            : "<h2>Grazie per la risposta! Ci dispiace non vederti quel giorno.</h2>";
 }
-
+    
 /* ============================================================
    PAGINA INVITATO
    ============================================================ */
