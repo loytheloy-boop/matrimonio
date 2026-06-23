@@ -1,6 +1,5 @@
 /* ============================================================
    CONFIGURAZIONE
-   Inserisci qui l'URL del tuo Google Apps Script
    ============================================================ */
 const API_URL = "https://script.google.com/macros/s/AKfycbxbOePOroxSVH9Ttsz8QZZhf3-VxmA89SKeGFHyJKR5NreKfts53Fvpq8gkUgGsJoYFrg/exec";
 let CONFIG = {};
@@ -10,7 +9,7 @@ let ricerca = "";
 let ordineAsc = true;
 
 /* ============================================================
-   CARICA CONFIGURAZIONE (data, ora, luoghi)
+   CARICA CONFIGURAZIONE
    ============================================================ */
 async function caricaConfig() {
     try {
@@ -24,7 +23,6 @@ async function caricaConfig() {
             heroData.textContent = `${CONFIG.data} – ore ${CONFIG.ora} – ${CONFIG.cerimonia_luogo}`;
         }
 
-        // Mostra il ricevimento solo se non vuoto
         if (heroRicevimento) {
             if (CONFIG.ricevimento_luogo.trim() !== "") {
                 heroRicevimento.textContent = `A seguire ricevimento presso ${CONFIG.ricevimento_luogo}`;
@@ -39,7 +37,7 @@ async function caricaConfig() {
 }
 
 /* ============================================================
-   CARICA LISTA INVITATI (con anti-cache)
+   CARICA LISTA INVITATI
    ============================================================ */
 async function caricaDati() {
     const res = await fetch("data/invitati.json?nocache=" + Date.now());
@@ -71,7 +69,7 @@ function login() {
 }
 
 /* ============================================================
-   GOOGLE SHEETS: LETTURA E SCRITTURA
+   GOOGLE SHEETS
    ============================================================ */
 async function caricaConferme() {
     const res = await fetch(API_URL);
@@ -90,7 +88,7 @@ async function conferma(id, risposta) {
     const payload = {
         id: invitato.id,
         nome: invitato.nome,
-        singolo: invitato.Singolo,
+        singolo: invitato.singolo,
         email: invitato.email,
         stato: risposta === "si" ? "confermato" : "non confermato"
     };
@@ -125,10 +123,10 @@ function mostraSchedaInvitato() {
         return;
     }
 
-    // Campo corretto: "Singolo"
-    const singolo = invitato.Singolo === "Si";
+    // Campo corretto: "singolo"
+    const singolo = invitato.singolo === "Si";
 
-    // Seleziona immagine
+    // Selezione immagine corretta
     const imgSrc = singolo
         ? "img/singolo.jpg"
         : "img/pluri.jpg";
@@ -236,7 +234,7 @@ async function mostraInvitati() {
             tab.innerHTML += `
                 <tr>
                     <td>${inv.nome}</td>
-                    <td>${inv.Singolo}</td>
+                    <td>${inv.singolo}</td>
                     <td>${inv.email}</td>
                     <td>${badge}</td>
                     <td><button onclick="generaLink(${inv.id})">Genera link</button></td>
@@ -246,7 +244,7 @@ async function mostraInvitati() {
 }
 
 /* ============================================================
-   AVVIO (con fix per smartphone lenti)
+   AVVIO
    ============================================================ */
 window.onload = async () => {
     await caricaConfig();
