@@ -24,9 +24,15 @@ async function caricaConfig() {
             heroData.textContent = `${CONFIG.data} – ore ${CONFIG.ora} – ${CONFIG.cerimonia_luogo}`;
         }
 
+        // 🔥 FIX: mostra il ricevimento solo se non vuoto
         if (heroRicevimento) {
-            heroRicevimento.textContent = `A seguire ricevimento presso ${CONFIG.ricevimento_luogo}`;
+            if (CONFIG.ricevimento_luogo.trim() !== "") {
+                heroRicevimento.textContent = `A seguire ricevimento presso ${CONFIG.ricevimento_luogo}`;
+            } else {
+                heroRicevimento.textContent = "";
+            }
         }
+
     } catch (e) {
         console.error("Errore nel caricamento di config.json", e);
     }
