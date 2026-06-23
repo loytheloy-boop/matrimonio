@@ -127,6 +127,11 @@ function mostraSchedaInvitato() {
 
     const singolo = invitato.singolo === "Si";
 
+    // 🔥 Seleziona immagine in base al campo "singolo"
+    const imgSrc = singolo
+        ? "img/Part. Singolo + cerimonia + ricevimento.jpg"
+        : "img/Part. Pluri + cerimonia + ricevimento.jpg";
+
     const testoInvito = singolo
         ? `Siamo felici di invitarti al nostro matrimonio.`
         : `Siamo felici di invitarvi al nostro matrimonio.`;
@@ -140,6 +145,8 @@ function mostraSchedaInvitato() {
         : `Confermate la vostra presenza?`;
 
     div.innerHTML = `
+        <img src="${imgSrc}" alt="Partecipazione" style="width:100%; max-width:500px; border-radius:12px; margin-bottom:20px;">
+
         <h2>Ciao ${invitato.nome}!</h2>
         <p>${testoInvito}</p>
         <p>Abbiamo già tutto… tranne forse il viaggio di nozze.</p>
