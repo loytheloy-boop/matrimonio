@@ -161,6 +161,24 @@ function mostraSchedaInvitato() {
 }
 
 /* ============================================================
+   FUNZIONE DI TEST (MOSTRA IL CAMPO "singolo")
+   ============================================================ */
+function testSingoloRapido() {
+    let html = "<h2>TEST CAMPO 'singolo'</h2>";
+    html += "<p>Valori letti dal file invitati.json:</p>";
+    html += "<ul style='font-size:18px; line-height:1.6;'>";
+
+    invitati.forEach(inv => {
+        html += `<li><strong>${inv.nome}</strong> → singolo: <strong>${inv.singolo}</strong></li>`;
+    });
+
+    html += "</ul>";
+
+    const div = document.getElementById("contenuto") || document.body;
+    div.innerHTML = html;
+}
+
+/* ============================================================
    FILTRI E RICERCA
    ============================================================ */
 function filtro(tipo) {
@@ -260,18 +278,3 @@ window.onload = async () => {
         }
     }
 };
-function testSingolo() {
-    let html = "<h2>Test campo 'singolo'</h2>";
-    html += "<p>Controllo del valore per ogni invitato:</p>";
-    html += "<ul>";
-
-    invitati.forEach(inv => {
-        html += `<li><strong>${inv.nome}</strong> → singolo: <strong>${inv.singolo}</strong></li>`;
-    });
-
-    html += "</ul>";
-
-    // Mostra il risultato nella pagina
-    const div = document.getElementById("contenuto") || document.body;
-    div.innerHTML = html;
-}
