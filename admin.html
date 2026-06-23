@@ -2,47 +2,94 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <title>Area Riservata</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <script defer src="script.js"></script>
+    <title>Area Admin - Matrimonio</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+
+        h1 {
+            margin-bottom: 10px;
+        }
+
+        #login, #admin-area {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 700px;
+            margin: auto;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        table th, table td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        table th {
+            background: #eee;
+            cursor: pointer;
+        }
+
+        .badge {
+            padding: 5px 10px;
+            border-radius: 6px;
+            color: white;
+        }
+
+        .verde { background: #28a745; }
+        .rosso { background: #dc3545; }
+
+        button {
+            cursor: pointer;
+        }
+    </style>
+
+    <script src="script.js"></script>
 </head>
 <body>
 
-<div class="hero">
-    <img src="img/sposi.jpg" class="foto-sposi" alt="Foto degli sposi">
-    <h1>Matrimonio di Alessandro e Deborah</h1>
+    <h1>Area Admin</h1>
 
-    <h3 id="hero-data"></h3>
-    <h4 id="hero-ricevimento" class="hero-sub"></h4>
-</div>
-
-<h2 class="titolo-sezione">Area Riservata</h2>
-
-<div id="login" class="login-box">
-    <input type="password" id="pwd" placeholder="Password">
-    <button onclick="login()">Accedi</button>
-</div>
-
-<div id="admin-area" style="display:none;">
-
-    <div id="controls">
-        <input type="text" id="search" placeholder="Cerca invitato..." onkeyup="filtra()">
-        <button onclick="filtro('tutti')">Tutti</button>
-        <button onclick="filtro('confermato')">Confermati</button>
-        <button onclick="filtro('attesa')">In attesa</button>
+    <!-- LOGIN -->
+    <div id="login">
+        <p>Inserisci la password per accedere:</p>
+        <input type="password" id="pwd" placeholder="Password">
+        <button onclick="login()">Entra</button>
     </div>
 
-    <div class="table-wrapper">
+    <!-- AREA ADMIN -->
+    <div id="admin-area" style="display:none;">
+
+        <!-- 🔍 TASTO DI TEST CAMPO "singolo" -->
+        <button onclick="testSingoloRapido()" 
+                style="padding:12px 20px; font-size:18px; margin:20px 0; border-radius:8px; background:#ffd700;">
+            🔍 Test campo "singolo"
+        </button>
+
+        <h2>Lista invitati</h2>
+
+        <input type="text" id="search" placeholder="Cerca..." onkeyup="filtra()" 
+               style="padding:8px; width:100%; margin-bottom:15px;">
+
+        <div style="margin-bottom:15px;">
+            <button onclick="filtro('tutti')">Tutti</button>
+            <button onclick="filtro('confermato')">Confermati</button>
+            <button onclick="filtro('attesa')">In attesa</button>
+        </div>
+
         <table id="tabella"></table>
     </div>
-</div>
 
 </body>
 </html>
-<h1>Area Admin</h1>
-
-<button onclick="testSingoloRapido()" 
-        style="padding:12px 20px; font-size:18px; margin:20px; border-radius:8px;">
-    🔍 Test campo "singolo"
-</button>
