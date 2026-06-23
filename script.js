@@ -126,7 +126,7 @@ function mostraSchedaInvitato() {
         <p>Se volete darci una mano a partire,</p>
         <p>ecco il nostro salvadanaio digitale:</p>
         <p>Alessandro Albertini Deborah Pennetta</p>
-        <p>IBAN IT69A0569651530000006781X42</p>
+        <p>IBAN IT93T0538751530000049542558</p>
         <p>Causale: Matrimonio Alessandro e Deborah</p>
         <h3>Confermo la mia/nostra presenza</h3>
         <button onclick="conferma(${id}, 'si')" class="btn-si">Sì</button>
