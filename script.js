@@ -84,7 +84,7 @@ async function conferma(id, risposta) {
     const payload = {
         id: invitato.id,
         nome: invitato.nome,
-        telefono: invitato.telefono,
+        singolo: invitato.singolo,
         email: invitato.email,
         stato: risposta === "si" ? "confermato" : "non confermato"
     };
@@ -99,7 +99,7 @@ async function conferma(id, risposta) {
             ? "<h2>Grazie di cuore! Ti aspettiamo.</h2>"
             : "<h2>Grazie per la risposta! Ci dispiace non vederti quel giorno.</h2>";
 }
-    
+
 /* ============================================================
    PAGINA INVITATO
    ============================================================ */
@@ -119,12 +119,7 @@ function mostraSchedaInvitato() {
         return;
     }
 
-    // Testo dinamico in base al campo "Singolo"
-    const singolo = invitato.Singolo === "Si";
-
-    const testoSaluto = singolo
-        ? `Ciao ${invitato.nome}!`
-        : `Ciao ${invitato.nome}!`;
+    const singolo = invitato.singolo === "Si";
 
     const testoInvito = singolo
         ? `Siamo felici di invitarti al nostro matrimonio.`
@@ -139,7 +134,7 @@ function mostraSchedaInvitato() {
         : `Confermate la vostra presenza?`;
 
     div.innerHTML = `
-        <h2>${testoSaluto}</h2>
+        <h2>Ciao ${invitato.nome}!</h2>
         <p>${testoInvito}</p>
         <p>Abbiamo già tutto… tranne forse il viaggio di nozze.</p>
         <p>${testoViaggio}</p>
@@ -152,7 +147,6 @@ function mostraSchedaInvitato() {
         <button onclick="conferma(${id}, 'no')" class="btn-no">No</button>
     `;
 }
-
 
 /* ============================================================
    FILTRI E RICERCA
@@ -202,7 +196,7 @@ async function mostraInvitati() {
     tab.innerHTML = `
         <tr>
             <th onclick="ordina()">Nome</th>
-            <th>Telefono</th>
+            <th>Singolo</th>
             <th>Email</th>
             <th>Stato</th>
             <th>Link</th>
@@ -228,7 +222,7 @@ async function mostraInvitati() {
             tab.innerHTML += `
                 <tr>
                     <td>${inv.nome}</td>
-                    <td>${inv.telefono}</td>
+                    <td>${inv.singolo}</td>
                     <td>${inv.email}</td>
                     <td>${badge}</td>
                     <td><button onclick="generaLink(${inv.id})">Genera link</button></td>
@@ -244,7 +238,6 @@ window.onload = async () => {
     await caricaConfig();
     await caricaDati();
 
-    // Smartphone fix: se invitati non è ancora pronto, ritenta
     if (document.getElementById("contenuto")) {
         if (invitati.length > 0) {
             mostraSchedaInvitato();
