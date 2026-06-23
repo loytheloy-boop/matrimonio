@@ -260,3 +260,18 @@ window.onload = async () => {
         }
     }
 };
+function testSingolo() {
+    let html = "<h2>Test campo 'singolo'</h2>";
+    html += "<p>Controllo del valore per ogni invitato:</p>";
+    html += "<ul>";
+
+    invitati.forEach(inv => {
+        html += `<li><strong>${inv.nome}</strong> → singolo: <strong>${inv.singolo}</strong></li>`;
+    });
+
+    html += "</ul>";
+
+    // Mostra il risultato nella pagina
+    const div = document.getElementById("contenuto") || document.body;
+    div.innerHTML = html;
+}
