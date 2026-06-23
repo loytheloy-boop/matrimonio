@@ -24,7 +24,7 @@ async function caricaConfig() {
             heroData.textContent = `${CONFIG.data} – ore ${CONFIG.ora} – ${CONFIG.cerimonia_luogo}`;
         }
 
-        // 🔥 FIX: mostra il ricevimento solo se non vuoto
+        // Mostra il ricevimento solo se non vuoto
         if (heroRicevimento) {
             if (CONFIG.ricevimento_luogo.trim() !== "") {
                 heroRicevimento.textContent = `A seguire ricevimento presso ${CONFIG.ricevimento_luogo}`;
@@ -90,7 +90,7 @@ async function conferma(id, risposta) {
     const payload = {
         id: invitato.id,
         nome: invitato.nome,
-        singolo: invitato.singolo,
+        singolo: invitato.Singolo,
         email: invitato.email,
         stato: risposta === "si" ? "confermato" : "non confermato"
     };
@@ -125,12 +125,13 @@ function mostraSchedaInvitato() {
         return;
     }
 
-    const singolo = invitato.singolo === "Si";
+    // Campo corretto: "Singolo"
+    const singolo = invitato.Singolo === "Si";
 
-    // 🔥 Seleziona immagine in base al campo "singolo"
+    // Seleziona immagine
     const imgSrc = singolo
-        ? "img/Part. Singolo + cerimonia + ricevimento.jpg"
-        : "img/Part. Pluri + cerimonia + ricevimento.jpg";
+        ? "img/singolo.jpg"
+        : "img/pluri.jpg";
 
     const testoInvito = singolo
         ? `Siamo felici di invitarti al nostro matrimonio.`
@@ -235,7 +236,7 @@ async function mostraInvitati() {
             tab.innerHTML += `
                 <tr>
                     <td>${inv.nome}</td>
-                    <td>${inv.singolo}</td>
+                    <td>${inv.Singolo}</td>
                     <td>${inv.email}</td>
                     <td>${badge}</td>
                     <td><button onclick="generaLink(${inv.id})">Genera link</button></td>
