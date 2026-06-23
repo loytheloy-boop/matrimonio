@@ -196,7 +196,7 @@ async function mostraInvitati() {
     tab.innerHTML = `
         <tr>
             <th onclick="ordina()">Nome</th>
-            <th>Singolo</th>
+            <th>singolo</th>
             <th>Email</th>
             <th>Stato</th>
             <th>Link</th>
