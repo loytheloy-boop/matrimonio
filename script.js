@@ -119,20 +119,40 @@ function mostraSchedaInvitato() {
         return;
     }
 
+    // Testo dinamico in base al campo "Singolo"
+    const singolo = invitato.Singolo === "Si";
+
+    const testoSaluto = singolo
+        ? `Ciao ${invitato.nome}!`
+        : `Ciao ${invitato.nome}!`;
+
+    const testoInvito = singolo
+        ? `Siamo felici di invitarti al nostro matrimonio.`
+        : `Siamo felici di invitarvi al nostro matrimonio.`;
+
+    const testoViaggio = singolo
+        ? `Se desideri darci una mano a partire, ecco il nostro salvadanaio digitale:`
+        : `Se desiderate darci una mano a partire, ecco il nostro salvadanaio digitale:`;
+
+    const testoConferma = singolo
+        ? `Confermi la tua presenza?`
+        : `Confermate la vostra presenza?`;
+
     div.innerHTML = `
-        <h2>Ciao ${invitato.nome}!</h2>
-        <p>Siamo felici di invitarti al nostro matrimonio.</p>
-        <p>Abbiamo già tutto… tranne forse il viaggio di nozze!.</p>
-        <p>Se volete darci una mano a partire,</p>
-        <p>ecco il nostro salvadanaio digitale:</p>
-        <p>Alessandro Albertini Deborah Pennetta</p>
-        <p>IBAN IT93T0538751530000049542558</p>
-        <p>Causale: Matrimonio Alessandro e Deborah</p>
-        <h3>Confermo la mia/nostra presenza</h3>
+        <h2>${testoSaluto}</h2>
+        <p>${testoInvito}</p>
+        <p>Abbiamo già tutto… tranne forse il viaggio di nozze.</p>
+        <p>${testoViaggio}</p>
+        <p><strong>Alessandro Albertini – Deborah Pennetta</strong></p>
+        <p><strong>IBAN: IT93T0538751530000049542558</strong></p>
+        <p><strong>Causale: Matrimonio Alessandro e Deborah</strong></p>
+
+        <h3>${testoConferma}</h3>
         <button onclick="conferma(${id}, 'si')" class="btn-si">Sì</button>
         <button onclick="conferma(${id}, 'no')" class="btn-no">No</button>
     `;
 }
+
 
 /* ============================================================
    FILTRI E RICERCA
