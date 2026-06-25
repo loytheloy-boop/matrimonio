@@ -123,10 +123,8 @@ function mostraSchedaInvitato() {
         return;
     }
 
-    // Campo corretto: "singolo"
     const singolo = invitato.singolo === "Si";
 
-    // Selezione immagine corretta
     const imgSrc = singolo
         ? "img/singolo.jpg"
         : "img/pluri.jpg";
@@ -161,7 +159,7 @@ function mostraSchedaInvitato() {
 }
 
 /* ============================================================
-   FUNZIONE DI TEST (MOSTRA IL CAMPO "singolo")
+   FUNZIONE DI TEST
    ============================================================ */
 function testSingoloRapido() {
     let html = "<h2>TEST CAMPO 'singolo'</h2>";
@@ -238,6 +236,7 @@ async function mostraInvitati() {
             const stato = conferme.find(c => c.id == inv.id)?.stato || "in attesa";
 
             if (filtroAttivo === "confermato" && stato !== "confermato") return false;
+            if (filtroAttivo === "non_confermato" && stato !== "non confermato") return false;
             if (filtroAttivo === "attesa" && stato !== "in attesa") return false;
 
             return inv.nome.toLowerCase().includes(ricerca);
@@ -245,9 +244,14 @@ async function mostraInvitati() {
         .forEach(inv => {
             const stato = conferme.find(c => c.id == inv.id)?.stato || "in attesa";
 
-            const badge = stato === "confermato"
-                ? `<span class="badge verde">✔ Confermato</span>`
-                : `<span class="badge rosso">⏳ In attesa</span>`;
+            let badge = "";
+            if (stato === "confermato") {
+                badge = `<span class="badge verde">✔ Confermato</span>`;
+            } else if (stato === "non confermato") {
+                badge = `<span class="badge rosso">✖ Non confermato</span>`;
+            } else {
+                badge = `<span class="badge rosso">⏳ In attesa</span>`;
+            }
 
             tab.innerHTML += `
                 <tr>
