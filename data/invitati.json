@@ -27,6 +27,6 @@
     { "id": 27, "nome": "Paolo e Lucia", "singolo": "No", "email": "" },
     { "id": 28, "nome": "Ortho", "singolo": "Si", "email": "" },
     { "id": 29, "nome": "Patatona", "singolo": "Si", "email": "" },
-    { "id": 30, "nome": "Daniele", "singolo": "Si", "email": "" }, 
+    { "id": 30, "nome": "Daniele e Elena", "singolo": "No", "email": "" }, 
     { "id": 31, "nome": "Gaia", "singolo": "Si", "email": "" }
 ]
