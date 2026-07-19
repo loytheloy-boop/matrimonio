@@ -53,9 +53,17 @@
         button {
             cursor: pointer;
         }
+
+        .box-stop {
+            margin-top: 20px;
+            padding: 15px;
+            background: #fafafa;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
     </style>
 
-    <script src="script.js?v=3"></script>
+    <script src="script.js?v=4"></script>
 </head>
 <body>
 
@@ -71,13 +79,14 @@
     <!-- AREA ADMIN -->
     <div id="admin-area" style="display:none;">
 
-        <!-- 🔍 TASTO DI TEST CAMPO "singolo" -->
-        <!--
-<button onclick="testSingoloRapido()" 
-        style="padding:12px 20px; font-size:18px; margin:20px 0; border-radius:8px; background:#ffd700;">
-    🔍 Test campo "singolo"
-</button>
--->
+        <!-- 🛑 STOP ALLE ADESIONI -->
+        <div class="box-stop">
+            <h3>Stop alle adesioni</h3>
+            <label style="font-size:18px;">
+                <input type="checkbox" id="stop-adesioni" onchange="toggleStopAdesioni()">
+                Blocca nuove conferme
+            </label>
+        </div>
 
         <h2>Lista invitati</h2>
 
