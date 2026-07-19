@@ -8,6 +8,9 @@ let filtroAttivo = "tutti";
 let ricerca = "";
 let ordineAsc = true;
 
+/* 🛑 STOP ALLE ADESIONI (persistente) */
+let stopAdesioni = localStorage.getItem("stopAdesioni") === "true";
+
 /* ============================================================
    CARICA CONFIGURAZIONE
    ============================================================ */
@@ -54,6 +57,10 @@ function login() {
         document.getElementById("login").style.display = "none";
         document.getElementById("admin-area").style.display = "block";
 
+        /* Imposta lo stato del checkbox */
+        const chk = document.getElementById("stop-adesioni");
+        if (chk) chk.checked = stopAdesioni;
+
         mostraInvitati();
 
         const adminArea = document.querySelector("#admin-area");
@@ -66,6 +73,15 @@ function login() {
     } else {
         alert("Password errata");
     }
+}
+
+/* ============================================================
+   🛑 STOP ALLE ADESIONI
+   ============================================================ */
+function toggleStopAdesioni() {
+    stopAdesioni = document.getElementById("stop-adesioni").checked;
+    localStorage.setItem("stopAdesioni", stopAdesioni);
+    alert(stopAdesioni ? "Adesioni bloccate" : "Adesioni riaperte");
 }
 
 /* ============================================================
@@ -82,6 +98,13 @@ async function conferma(id, risposta) {
     if (!invitato) {
         document.getElementById("contenuto").innerHTML =
             "<h2>Invito non valido</h2>";
+        return;
+    }
+
+    /* 🛑 BLOCCO ADESIONI */
+    if (stopAdesioni && risposta === "si") {
+        document.getElementById("contenuto").innerHTML =
+            "<h2>Spiacenti, ma il sistema non può raccogliere adesioni per termini di tempo scaduti.<br>Rivolgersi direttamente agli Sposi.<br>Grazie!</h2>";
         return;
     }
 
@@ -125,9 +148,7 @@ function mostraSchedaInvitato() {
 
     const singolo = invitato.singolo === "Si";
 
-    const imgSrc = singolo
-        ? "img/singolo.jpg"
-        : "img/pluri.jpg";
+    const imgSrc = singolo ? "img/singolo.jpg" : "img/pluri.jpg";
 
     const testoInvito = singolo
         ? `Siamo felici di invitarti al nostro matrimonio.`
