@@ -1,5 +1,5 @@
 [
-    { "id": 1, "nome": "Maria Teresa, Michele e Greta", "singolo": "No", "email": "" },
+    { "id": 1, "nome": "Maria Teresa e Michele", "singolo": "No", "email": "" },
     { "id": 2, "nome": "Inga", "singolo": "Si", "email": "" },    
     { "id": 3, "nome": "Davide", "singolo": "Si", "email": "" },
     { "id": 4, "nome": "Zio Aldo", "singolo": "Si", "email": "" },
